@@ -1,0 +1,788 @@
+{
+  "dataset": "mimic_2_omop",
+  "data_type": "SMD",
+  "view_type": "presentable_top1_view",
+  "match_count": 47,
+  "model_type": "gradient_boosting",
+  "threshold": 0.6,
+  "top_k_per_source": 3,
+  "scene": "schema_only_matching",
+  "matching_strategy": "smd_field_level_matching",
+  "scene_detector": "content_heuristic_fallback",
+  "scene_confidence": 0.88,
+  "summary": {
+    "evaluated_source_count": 47,
+    "holdout_pair_count": 47,
+    "top1_accuracy": 0.06382978723404255,
+    "top3_accuracy": 0.1276595744680851,
+    "top5_accuracy": 0.1276595744680851,
+    "mrr": null,
+    "candidate_precision": null,
+    "llm_reranked_source_count": 0,
+    "note": "展示版结果：每个源字段仅保留排序后的最佳候选，适合汇报与展示。"
+  },
+  "agent_diagnostics": {
+    "issues": [
+      "too_many_candidates",
+      "one_to_many_conflict",
+      "field_type_incompatible",
+      "ambiguous_results",
+      "target_fields_uncovered"
+    ],
+    "summary": "候选结果数量偏多，当前阈值可能偏松。；检测到 45 个源字段或记录存在一对多冲突。；检测到 91 条匹配存在字段类型不兼容。；检测到 4 条结果落在模糊置信度区间。；仍有 27 个目标字段未被覆盖。"
+  },
+  "matches": [
+    {
+      "source_id": "CALLOUT::CURR_WARDID",
+      "source_table": "CALLOUT",
+      "source_column": "CURR_WARDID",
+      "target_id": "COST::cost_source_concept_id",
+      "target_table": "COST",
+      "target_column": "cost_source_concept_id",
+      "confidence": 0.913585,
+      "ranking_score": 0.619591,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "VISIT_DETAIL::admitted_from_concept_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CALLOUT::HADM_ID",
+      "source_table": "CALLOUT",
+      "source_column": "HADM_ID",
+      "target_id": "CONCEPT::domain_id",
+      "target_table": "CONCEPT",
+      "target_column": "domain_id",
+      "confidence": 0.986995,
+      "ranking_score": 0.553427,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "VISIT_DETAIL::visit_occurrence_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CALLOUT::SUBMIT_CAREUNIT",
+      "source_table": "CALLOUT",
+      "source_column": "SUBMIT_CAREUNIT",
+      "target_id": "COST::cost_event_id",
+      "target_table": "COST",
+      "target_column": "cost_event_id",
+      "confidence": 0.920898,
+      "ranking_score": 0.49659,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "VISIT_DETAIL::visit_detail_concept_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CAREGIVERS::CGID",
+      "source_table": "CAREGIVERS",
+      "source_column": "CGID",
+      "target_id": "CARE_SITE::place_of_service_concept_id",
+      "target_table": "CARE_SITE",
+      "target_column": "place_of_service_concept_id",
+      "confidence": 0.971005,
+      "ranking_score": 0.592788,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "PROVIDER::provider_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CHARTEVENTS::CHARTTIME",
+      "source_table": "CHARTEVENTS",
+      "source_column": "CHARTTIME",
+      "target_id": "COHORT_DEFINITION::cohort_initiation_date",
+      "target_table": "COHORT_DEFINITION",
+      "target_column": "cohort_initiation_date",
+      "confidence": 0.753095,
+      "ranking_score": 0.560264,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "MEASUREMENT::measurement_datetime"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CHARTEVENTS::HADM_ID",
+      "source_table": "CHARTEVENTS",
+      "source_column": "HADM_ID",
+      "target_id": "COHORT_DEFINITION::cohort_definition_id",
+      "target_table": "COHORT_DEFINITION",
+      "target_column": "cohort_definition_id",
+      "confidence": 0.897379,
+      "ranking_score": 0.635173,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "MEASUREMENT::visit_occurrence_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CHARTEVENTS::SUBJECT_ID",
+      "source_table": "CHARTEVENTS",
+      "source_column": "SUBJECT_ID",
+      "target_id": "MEASUREMENT::unit_concept_id",
+      "target_table": "MEASUREMENT",
+      "target_column": "unit_concept_id",
+      "confidence": 0.980184,
+      "ranking_score": 0.66157,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "MEASUREMENT::person_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CHARTEVENTS::VALUE",
+      "source_table": "CHARTEVENTS",
+      "source_column": "VALUE",
+      "target_id": "MEASUREMENT::value_source_value",
+      "target_table": "MEASUREMENT",
+      "target_column": "value_source_value",
+      "confidence": 0.946392,
+      "ranking_score": 0.560828,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "MEASUREMENT::value_as_string"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CHARTEVENTS::VALUEUOM",
+      "source_table": "CHARTEVENTS",
+      "source_column": "VALUEUOM",
+      "target_id": "MEASUREMENT::value_source_value",
+      "target_table": "MEASUREMENT",
+      "target_column": "value_source_value",
+      "confidence": 0.976299,
+      "ranking_score": 0.535545,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "MEASUREMENT::unit_concept_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CPTEVENTS::CHARTDATE",
+      "source_table": "CPTEVENTS",
+      "source_column": "CHARTDATE",
+      "target_id": "CONCEPT::valid_start_date",
+      "target_table": "CONCEPT",
+      "target_column": "valid_start_date",
+      "confidence": 0.942013,
+      "ranking_score": 0.495851,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "PROCEDURE_OCCURRENCE::procedure_date"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CPTEVENTS::CPT_CD",
+      "source_table": "CPTEVENTS",
+      "source_column": "CPT_CD",
+      "target_id": "CONCEPT::concept_code",
+      "target_table": "CONCEPT",
+      "target_column": "concept_code",
+      "confidence": 0.959264,
+      "ranking_score": 0.504018,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "PROCEDURE_OCCURRENCE::procedure_source_value"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "CPTEVENTS::CPT_NUMBER",
+      "source_table": "CPTEVENTS",
+      "source_column": "CPT_NUMBER",
+      "target_id": "MEASUREMENT::value_as_number",
+      "target_table": "MEASUREMENT",
+      "target_column": "value_as_number",
+      "confidence": 0.933658,
+      "ranking_score": 0.493897,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "PROCEDURE_OCCURRENCE::procedure_concept_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "DATETIMEEVENTS::CHARTTIME",
+      "source_table": "DATETIMEEVENTS",
+      "source_column": "CHARTTIME",
+      "target_id": "SPECIMEN::specimen_datetime",
+      "target_table": "SPECIMEN",
+      "target_column": "specimen_datetime",
+      "confidence": 0.964419,
+      "ranking_score": 0.474934,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "OBSERVATION::observation_datetime"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "DATETIMEEVENTS::ITEMID",
+      "source_table": "DATETIMEEVENTS",
+      "source_column": "ITEMID",
+      "target_id": "NOTE_NLP::note_id",
+      "target_table": "NOTE_NLP",
+      "target_column": "note_id",
+      "confidence": 0.75058,
+      "ranking_score": 0.533286,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "OBSERVATION::observation_source_value"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "DIAGNOSES_ICD::SUBJECT_ID",
+      "source_table": "DIAGNOSES_ICD",
+      "source_column": "SUBJECT_ID",
+      "target_id": "DOSE_ERA::drug_concept_id",
+      "target_table": "DOSE_ERA",
+      "target_column": "drug_concept_id",
+      "confidence": 0.900874,
+      "ranking_score": 0.664942,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "CONDITION_OCCURRENCE::person_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "DRGCODES::DRG_TYPE",
+      "source_table": "DRGCODES",
+      "source_column": "DRG_TYPE",
+      "target_id": "DRUG_EXPOSURE::drug_type_concept_id",
+      "target_table": "DRUG_EXPOSURE",
+      "target_column": "drug_type_concept_id",
+      "confidence": 0.943284,
+      "ranking_score": 0.523617,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "OBSERVATION::unit_source_value"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "D_CPT::SECTIONHEADER",
+      "source_table": "D_CPT",
+      "source_column": "SECTIONHEADER",
+      "target_id": "CONCEPT::concept_code",
+      "target_table": "CONCEPT",
+      "target_column": "concept_code",
+      "confidence": 0.988859,
+      "ranking_score": 0.507879,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "CONCEPT::concept_name"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "D_ICD_PROCEDURES::LONG_TITLE",
+      "source_table": "D_ICD_PROCEDURES",
+      "source_column": "LONG_TITLE",
+      "target_id": "PROCEDURE_OCCURRENCE::person_id",
+      "target_table": "PROCEDURE_OCCURRENCE",
+      "target_column": "person_id",
+      "confidence": 0.945408,
+      "ranking_score": 0.512995,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "CONCEPT::concept_name"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "D_LABITEMS::LOINC_CODE",
+      "source_table": "D_LABITEMS",
+      "source_column": "LOINC_CODE",
+      "target_id": "CONCEPT::concept_code",
+      "target_table": "CONCEPT",
+      "target_column": "concept_code",
+      "confidence": 0.92434,
+      "ranking_score": 0.517446,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 1,
+      "expected_targets": [
+        "CONCEPT::concept_code"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "ICUSTAYS::HADM_ID",
+      "source_table": "ICUSTAYS",
+      "source_column": "HADM_ID",
+      "target_id": "COST::drg_concept_id",
+      "target_table": "COST",
+      "target_column": "drg_concept_id",
+      "confidence": 0.813984,
+      "ranking_score": 0.591479,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "VISIT_DETAIL::visit_occurrence_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "ICUSTAYS::SUBJECT_ID",
+      "source_table": "ICUSTAYS",
+      "source_column": "SUBJECT_ID",
+      "target_id": "COST::cost_source_concept_id",
+      "target_table": "COST",
+      "target_column": "cost_source_concept_id",
+      "confidence": 0.985986,
+      "ranking_score": 0.68923,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "VISIT_DETAIL::person_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "INPUTEVENTS_CV::AMOUNTUOM",
+      "source_table": "INPUTEVENTS_CV",
+      "source_column": "AMOUNTUOM",
+      "target_id": "LOCATION::county",
+      "target_table": "LOCATION",
+      "target_column": "county",
+      "confidence": 0.889571,
+      "ranking_score": 0.415302,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "DRUG_EXPOSURE::dose_unit_source_value"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "INPUTEVENTS_CV::CGID",
+      "source_table": "INPUTEVENTS_CV",
+      "source_column": "CGID",
+      "target_id": "LOCATION::city",
+      "target_table": "LOCATION",
+      "target_column": "city",
+      "confidence": 0.819068,
+      "ranking_score": 0.37969,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "DRUG_EXPOSURE::provider_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "INPUTEVENTS_CV::CHARTTIME",
+      "source_table": "INPUTEVENTS_CV",
+      "source_column": "CHARTTIME",
+      "target_id": "MEASUREMENT::measurement_time",
+      "target_table": "MEASUREMENT",
+      "target_column": "measurement_time",
+      "confidence": 0.954709,
+      "ranking_score": 0.469278,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "DRUG_EXPOSURE::drug_exposure_start_date"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "INPUTEVENTS_CV::HADM_ID",
+      "source_table": "INPUTEVENTS_CV",
+      "source_column": "HADM_ID",
+      "target_id": "VISIT_OCCURRENCE::admitted_from_concept_id",
+      "target_table": "VISIT_OCCURRENCE",
+      "target_column": "admitted_from_concept_id",
+      "confidence": 0.733441,
+      "ranking_score": 0.520501,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "DRUG_EXPOSURE::visit_occurrence_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "INPUTEVENTS_CV::NEWBOTTLE",
+      "source_table": "INPUTEVENTS_CV",
+      "source_column": "NEWBOTTLE",
+      "target_id": "NOTE_NLP::note_id",
+      "target_table": "NOTE_NLP",
+      "target_column": "note_id",
+      "confidence": 0.670077,
+      "ranking_score": 0.518346,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "DRUG_EXPOSURE::refills"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "INPUTEVENTS_CV::SUBJECT_ID",
+      "source_table": "INPUTEVENTS_CV",
+      "source_column": "SUBJECT_ID",
+      "target_id": "SURVEY_CONDUCT::assisted_concept_id",
+      "target_table": "SURVEY_CONDUCT",
+      "target_column": "assisted_concept_id",
+      "confidence": 0.922294,
+      "ranking_score": 0.641841,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "DRUG_EXPOSURE::person_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "LABEVENTS::HADM_ID",
+      "source_table": "LABEVENTS",
+      "source_column": "HADM_ID",
+      "target_id": "MEASUREMENT::measurement_id",
+      "target_table": "MEASUREMENT",
+      "target_column": "measurement_id",
+      "confidence": 0.920686,
+      "ranking_score": 0.517576,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "MEASUREMENT::visit_occurrence_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "LABEVENTS::SUBJECT_ID",
+      "source_table": "LABEVENTS",
+      "source_column": "SUBJECT_ID",
+      "target_id": "MEASUREMENT::unit_concept_id",
+      "target_table": "MEASUREMENT",
+      "target_column": "unit_concept_id",
+      "confidence": 0.98381,
+      "ranking_score": 0.658548,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "MEASUREMENT::person_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "LABEVENTS::VALUENUM",
+      "source_table": "LABEVENTS",
+      "source_column": "VALUENUM",
+      "target_id": "MEASUREMENT::value_as_number",
+      "target_table": "MEASUREMENT",
+      "target_column": "value_as_number",
+      "confidence": 0.941367,
+      "ranking_score": 0.499443,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 1,
+      "expected_targets": [
+        "MEASUREMENT::value_as_number"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "MICROBIOLOGYEVEN::CHARTDATE",
+      "source_table": "MICROBIOLOGYEVEN",
+      "source_column": "CHARTDATE",
+      "target_id": "LOCATION_HISTORY::start_date",
+      "target_table": "LOCATION_HISTORY",
+      "target_column": "start_date",
+      "confidence": 0.887563,
+      "ranking_score": 0.493816,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "SPECIMEN::specimen_date"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "MICROBIOLOGYEVEN::SPEC_ITEMID",
+      "source_table": "MICROBIOLOGYEVEN",
+      "source_column": "SPEC_ITEMID",
+      "target_id": "SPECIMEN::person_id",
+      "target_table": "SPECIMEN",
+      "target_column": "person_id",
+      "confidence": 0.975271,
+      "ranking_score": 0.49523,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "SPECIMEN::specimen_type_concept_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "MICROBIOLOGYEVEN::SPEC_TYPE_DESC",
+      "source_table": "MICROBIOLOGYEVEN",
+      "source_column": "SPEC_TYPE_DESC",
+      "target_id": "PROVIDER::specialty_source_value",
+      "target_table": "PROVIDER",
+      "target_column": "specialty_source_value",
+      "confidence": 0.969154,
+      "ranking_score": 0.460013,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "SPECIMEN::specimen_source_value"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "OUTPUTEVENTS::HADM_ID",
+      "source_table": "OUTPUTEVENTS",
+      "source_column": "HADM_ID",
+      "target_id": "MEASUREMENT::measurement_id",
+      "target_table": "MEASUREMENT",
+      "target_column": "measurement_id",
+      "confidence": 0.869805,
+      "ranking_score": 0.489684,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "MEASUREMENT::visit_occurrence_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "PATIENTS::DOB",
+      "source_table": "PATIENTS",
+      "source_column": "DOB",
+      "target_id": "PERSON::gender_source_value",
+      "target_table": "PERSON",
+      "target_column": "gender_source_value",
+      "confidence": 0.894548,
+      "ranking_score": 0.410498,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "PERSON::birth_datetime"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "PATIENTS::GENDER",
+      "source_table": "PATIENTS",
+      "source_column": "GENDER",
+      "target_id": "PERSON::gender_concept_id",
+      "target_table": "PERSON",
+      "target_column": "gender_concept_id",
+      "confidence": 0.984685,
+      "ranking_score": 0.555499,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "PERSON::gender_source_value"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "PRESCRIPTIONS::DRUG",
+      "source_table": "PRESCRIPTIONS",
+      "source_column": "DRUG",
+      "target_id": "DRUG_ERA::drug_era_id",
+      "target_table": "DRUG_ERA",
+      "target_column": "drug_era_id",
+      "confidence": 0.959685,
+      "ranking_score": 0.488473,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "DRUG_EXPOSURE::drug_source_value"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "PRESCRIPTIONS::ENDDATE",
+      "source_table": "PRESCRIPTIONS",
+      "source_column": "ENDDATE",
+      "target_id": "SPECIMEN::specimen_date",
+      "target_table": "SPECIMEN",
+      "target_column": "specimen_date",
+      "confidence": 0.947674,
+      "ranking_score": 0.546862,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "DRUG_EXPOSURE::drug_exposure_end_datetime"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "PRESCRIPTIONS::ICUSTAY_ID",
+      "source_table": "PRESCRIPTIONS",
+      "source_column": "ICUSTAY_ID",
+      "target_id": "OBSERVATION::unit_concept_id",
+      "target_table": "OBSERVATION",
+      "target_column": "unit_concept_id",
+      "confidence": 0.981664,
+      "ranking_score": 0.65088,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "DRUG_EXPOSURE::visit_detail_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "PROCEDUREEVENTS_MV::HADM_ID",
+      "source_table": "PROCEDUREEVENTS_MV",
+      "source_column": "HADM_ID",
+      "target_id": "PROCEDURE_OCCURRENCE::procedure_concept_id",
+      "target_table": "PROCEDURE_OCCURRENCE",
+      "target_column": "procedure_concept_id",
+      "confidence": 0.822613,
+      "ranking_score": 0.561725,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "PROCEDURE_OCCURRENCE::visit_occurrence_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "PROCEDUREEVENTS_MV::ORDERCATEGORYNAME",
+      "source_table": "PROCEDUREEVENTS_MV",
+      "source_column": "ORDERCATEGORYNAME",
+      "target_id": "PROCEDURE_OCCURRENCE::procedure_datetime",
+      "target_table": "PROCEDURE_OCCURRENCE",
+      "target_column": "procedure_datetime",
+      "confidence": 0.950401,
+      "ranking_score": 0.566849,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "PROCEDURE_OCCURRENCE::modifier_source_value"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "PROCEDUREEVENTS_MV::STARTTIME",
+      "source_table": "PROCEDUREEVENTS_MV",
+      "source_column": "STARTTIME",
+      "target_id": "PROCEDURE_OCCURRENCE::procedure_datetime",
+      "target_table": "PROCEDURE_OCCURRENCE",
+      "target_column": "procedure_datetime",
+      "confidence": 0.912619,
+      "ranking_score": 0.535361,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 1,
+      "expected_targets": [
+        "PROCEDURE_OCCURRENCE::procedure_datetime"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "PROCEDURES_ICD::SUBJECT_ID",
+      "source_table": "PROCEDURES_ICD",
+      "source_column": "SUBJECT_ID",
+      "target_id": "PROCEDURE_OCCURRENCE::procedure_concept_id",
+      "target_table": "PROCEDURE_OCCURRENCE",
+      "target_column": "procedure_concept_id",
+      "confidence": 0.974366,
+      "ranking_score": 0.679848,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "PROCEDURE_OCCURRENCE::person_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "SERVICES::SUBJECT_ID",
+      "source_table": "SERVICES",
+      "source_column": "SUBJECT_ID",
+      "target_id": "OBSERVATION::unit_concept_id",
+      "target_table": "OBSERVATION",
+      "target_column": "unit_concept_id",
+      "confidence": 0.993139,
+      "ranking_score": 0.66615,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "VISIT_DETAIL::person_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "TRANSFERS::INTIME",
+      "source_table": "TRANSFERS",
+      "source_column": "INTIME",
+      "target_id": "METADATA::name",
+      "target_table": "METADATA",
+      "target_column": "name",
+      "confidence": 0.969421,
+      "ranking_score": 0.466186,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "VISIT_DETAIL::visit_detail_start_datetime"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "TRANSFERS::SUBJECT_ID",
+      "source_table": "TRANSFERS",
+      "source_column": "SUBJECT_ID",
+      "target_id": "OBSERVATION::unit_concept_id",
+      "target_table": "OBSERVATION",
+      "target_column": "unit_concept_id",
+      "confidence": 0.979796,
+      "ranking_score": 0.637914,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "VISIT_DETAIL::person_id"
+      ],
+      "review_required": false
+    },
+    {
+      "source_id": "d_items::ABBREVIATION",
+      "source_table": "d_items",
+      "source_column": "ABBREVIATION",
+      "target_id": "CARE_SITE::care_site_id",
+      "target_table": "CARE_SITE",
+      "target_column": "care_site_id",
+      "confidence": 0.931369,
+      "ranking_score": 0.458675,
+      "match_method": "smd_model_prediction:gradient_boosting",
+      "gold_label": 0,
+      "expected_targets": [
+        "CONCEPT::concept_code"
+      ],
+      "review_required": false
+    }
+  ]
+}

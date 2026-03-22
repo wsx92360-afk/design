@@ -1,0 +1,1305 @@
+A Unified Multi-Scenario Framework for Schema
+Matching based on LLM
+Qiang Gao1,* , Yunhao Xiao2,* , Yuren Hu2 , Ruifang Zhao1 , Baoqi Liu1 , Zaiwen Feng2 , Ying Wang2,† , Xiaoxia Li2, †
+1
+
+Information Research Center of Military Science, Academy of Military Science, China
+2
+Huazhong Agricultural University, China
+qiangcx2006@126.com, Yunhao Xiao@webmail.hzau.edu.cn, 794301701@qq.com,
+18813085037@163.com, baoqi87@foxmail.com, Zaiwen.Feng@mail.hzau.edu.cn,
+yingwang@mail.hzau.edu.cn, lixiaoxia@mail.hzau.edu.cn
+
+Abstract—Schema matching is pivotal in data integration,
+identifying semantic equivalences between attributes in structured data tables. Existing methods focus on schema-level or
+instance-level matching, excelling only in specific scenarios. This
+underscores the need for a unified approach adaptable to varying
+data availability conditions. This paper presents a unified schema
+matching framework based on large language models (LLMs)
+that effectively addresses schema matching tasks across three
+distinct scenarios: a Scenario with only MetaData (SMD), a
+Scenario with a Small amount of instance Data (SSD), and a
+Scenario with a Large amount of instance Data (SLD).
+The framework employs a two-step approach, integrating
+feature similarity computation with LLM prompt engineering.
+The first step involves comprehensive feature extraction and
+similarity analysis to efficiently filter potential matches, followed
+by scenario-specific LLM prompting for precise semantic matching. Our approach integrates textual, structural, and semantic
+features with LLM-based analysis using LLaMA3.1-8b as its
+base model. Extensive experiments on WikiData and MIMICIII datasets validate the framework’s effectiveness, achieving an
+F1 score of 92.5 and precision of 95.8 in the SLD scenario, while
+maintaining robust performance in scenarios with limited data.
+Ablation studies confirm that this two-step approach enhances
+both efficiency and accuracy, validating the framework’s capability to address diverse schema matching requirements within a
+unified solution.
+Index Terms—Schema Matching, Large Language Models,
+Feature Similarity Computation, Prompt Engineering, MultiScenario
+
+I. I NTRODUCTION
+Data integration and retrieval play a pivotal role in information management and data analysis [1]. Data integration
+enables the amalgamation of data from diverse sources and
+formats, facilitating the discovery and acquisition of valuable
+information for analysis and decision-making through retrieval
+techniques. Schema matching is a fundamental challenge in
+several database application domains, such as data integration, data warehousing, and semantic query processing [2].
+In essence, schema matching involves identifying mappings
+between corresponding elements of two schemas or ontologies
+[3].
+* These authors contributed equally to this work.
+† Corresponding authors: Ying Wang, Xiaoxia Li
+
+equivalence
+
+Ss
+
+as1
+
+...
+
+musicianLabel
+
+...
+
+asn
+
+Vs11
+
+...
+
+Jerry Landis
+
+...
+
+Vsn1
+
+...
+
+...
+
+Jack Hoppus
+
+...
+
+...
+
+Vs1n
+
+...
+
+Dietrich
+
+...
+
+Vsnn
+
+at1
+
+...
+
+musicianName
+
+...
+
+atm
+
+Vt11
+
+...
+
+Parker
+
+...
+
+Vsn1
+
+...
+
+...
+
+Alias
+
+...
+
+...
+
+Vt1m
+
+...
+
+Jerry Landis
+
+...
+
+Vtmm
+
+St
+
+Fig. 1. An example of a schema matching task
+
+Schema matching scenarios vary widely depending on data
+availability conditions. In many cases, organizations can only
+share metadata due to privacy concerns and data protection
+regulations, necessitating matching based solely on attribute
+names and descriptions. Other scenarios might allow access
+to a small sample of instance data for verification, while some
+situations permit comprehensive analysis of complete datasets.
+As shown in Fig. 1, when matching attributes like ”musicianLabel” and ”musicianName” across different schemas, their
+semantic equivalence may be determined using metadata in
+some cases, limited sample data in others, or complete instance
+data in optimal scenarios.
+These diverse scenarios present significant challenges to
+existing schema matching approaches. Traditional similaritybased methods often fail to understand semantics when limited to metadata [4], while instance-based techniques require
+substantial data availability that may not always be feasible. Furthermore, the computational complexity of processing
+large-scale datasets demands efficient matching strategies that
+maintain accuracy while managing resource constraints [5].
+Over the past three decades, researchers have proposed
+several approaches to address these challenges, including rulebased methods [6], semantic similarity approaches [4], [7]–
+[9], machine learning models [10], [11], and deep learning
+techniques [5], [12]–[14]. However, these approaches exhibit
+notable limitations when applied across varying scenarios.
+Traditional similarity-based methods struggle with semantic
+
+understanding across different representations [4], while machine learning methods generally require large amounts of
+training data and computational resources [5], [10]. Moreover,
+existing methods primarily focus on either metadata-only
+matching or instance-based matching, lacking the flexibility
+to handle multiple scenarios effectively.
+To tackle these challenges, we propose a novel two-step
+framework that combines feature similarity computation with
+LLM-based schema matching. The first step employs comprehensive feature extraction and similarity analysis to efficiently
+filter potential matches, while the second step uses scenariospecific LLM prompting for precise semantic matching. This
+approach effectively handles three distinct scenarios: Schema
+Matching with Metadata Only (SMD), Schema Matching with
+Sample Data (SSD), and Schema Matching with Large Data
+(SLD).
+Our framework makes several key contributions:
+• A unified approach that effectively handles various
+schema matching scenarios through a two-step process
+• An efficient feature similarity computation method that
+reduces the search space for LLM processing
+• A novel integration of LLM-based matching with
+scenario-specific prompting strategies
+• Comprehensive evaluation demonstrating the framework’s effectiveness across different scenarios
+The following sections are organized as follows: Section II
+presents the problem definition and our proposed framework
+overview. Section III discusses related work in schema matching. Section IV details our feature similarity computation approach. Section V describes the LLM-based schema matching
+process. Section VI presents experimental results and analysis.
+Finally, Section VII concludes the paper and discusses future
+work.
+II. P ROBLEM AND S OLUTION OVERVIEW
+A. Problem Statement
+Schema matching is defined as the process of identifying semantically equivalent elements across multiple schemas. These
+equivalences are determined through various characteristics,
+such as attribute names, data types, structural constraints,
+and instance data patterns. Based on these characteristics, we
+define the schema matching problem formally as follows:
+Definition 1 (Schema Matching Equivalence Relations). Let
+Ss and St represent a source schema and a target schema, with
+attributes As and At , respectively. Each attribute asi ∈ As
+and atj ∈ At is defined by:
+1) A metadata tuple (a.name, a.desc) containing the attribute name and description.
+2) An optional set of attribute values, defined as:
+Vsi = {vsi1 , vsi2 , . . . , vsim },
+Vtj = {vtj1 , vtj2 , . . . , vtjn }.
+The schema matching function is formally defined as:
+m : As × At → {true, false}
+
+where m(asi , atj ) = true if and only if asi is semantically
+equivalent to atj , indicating a match. The matching process
+is adapted to three scenarios:
+• SMD: Only the metadata tuple (a.name, a.desc) is considered for matching, where |Vsi | = |Vtj | = 0.
+• SSD: Both metadata and limited instance data are utilized, with |Vsi |, |Vtj | ≤ 5.
+• SLD: Both metadata and complete attribute value sets
+Vsi and Vtj are employed for comprehensive matching
+analysis.
+As illustrated in Fig. 1, a typical matching scenario involves
+identifying semantic equivalence between attributes such as
+”musicianLabel” and ”musicianName”, which may share identical content and meaning, despite having different names.
+B. A Unified Multi-scenario Framework for Schema matching
+based on LLM
+To address the challenges in schema matching across diverse
+scenarios, we propose a novel two-stage framework integrating
+traditional feature similarity computation with LLM-based
+semantic analysis. As illustrated in Fig. 2, our framework comprises two primary components: feature similarity computation
+and LLM-based schema matching. This framework unifies
+the handling of three distinct scenarios: Scenario with only
+Metadata (SMD), Scenario with Small instance Data (SSD),
+and Scenario with Large instance Data (SLD).
+The feature similarity computation stage, illustrated in
+Fig. 2(a), comprises three primary feature processing components. The text features module processes column names
+and descriptions, generating TF-IDF vectors to capture lexical
+similarities efficiently. The structural features module analyzes
+data types and statistical patterns within schema attributes.
+The semantic features module focuses on embeddings and
+content analysis when instance data is available. These features
+are then integrated through a similarity analyzer that employs
+scenario-specific combination strategies.
+The schema matching stage, as depicted in Fig. 2(b),
+employs an LLM to determine final matching decisions.
+This stage uses the similarity scores and features from the
+previous stage to construct scenario-specific prompts. For
+SMD scenarios, prompts emphasize metadata information.
+SSD scenarios incorporate limited instance samples, and SLD
+scenarios integrate comprehensive statistical information. The
+LLM processes these prompts to determine attribute equivalence, producing final schema matching results.
+This unified framework achieves both computational efficiency and robust semantic understanding capabilities. The
+feature similarity computation stage provides efficient initial
+analysis, while the LLM-based matching stage enables sophisticated semantic reasoning. The detailed implementation methods and technical specifications of each stage are elaborated
+in the following sections.
+III. R ELATED W ORKS
+In this section, we review related work in the field of
+schema matching, encompassing schema-based and instance-
+
+as1
+
+...
+
+asn
+
+at1
+
+...
+
+St
+
+SMD
+Ss
+
+Text_Features
+
+atm
+
+Column names
+Descriptions
+
+...
+
+asn
+
+...
+
+at1Vsn1 ...
+
+...
+
+... Vt11...
+
+...
+
+Vsn1
+
+...
+
+...
+
+...
+
+Ss
+as1
+
+...
+
+atm
+
+asn
+
+...
+
+Vasn1
+t1
+
+...
+
+atm
+
+...
+
+...
+
+V...
+t11
+
+...
+
+Vsn1
+
+Vs1n
+
+...
+
+V...
+snn
+
+...
+
+...
+
+Vt1m
+
+...
+
+Vtmm
+
+Ss
+
+Structural_Features
+
+Type & Stats
+
+Data types
+Statistics
+
+Scenario-specific
+weightings
+Threshold handling
+
+St
+
+Vs11
+
+SLD
+
+Feature combination
+strategies
+
+St
+
+as1
+Vs11
+
+SSD
+
+TF-IDF Vectors
+
+Semantic_Features
+Embeddings
+Content Analysis
+
+Semantic Vectors
+Similarity Analyzer
+
+Feature Processing
+
+(a) Feature Similarity Computation
+as1 equivalent to at1
+asn equivalent to atm
+as1
+
+...
+
+asn
+
+Vs11
+
+...
+
+Vsn1
+
+...
+
+...
+
+...
+
+Vs1n
+
+...
+
+Vsnn
+
+SMD
+
+SSD
+
+Ss
+
+Llama3.1-8b
+at1
+
+...
+
+atm
+
+Vt11
+
+...
+
+Vsn1
+
+...
+
+...
+
+...
+
+Vt1m
+
+...
+
+Vtmm
+
+St
+SLD
+
+(asi'.name,asi'.desc)
+(atj'.name, atj'.desc)
+( type)
+
+SMD All
+information
+（samples 5）
+
+SMD All
+information
+Statistical
+Information
+
+Schema Matching Results
+
+(b) Schema Matching Based on LLM
+
+Prompt Construction
+
+Fig. 2. A unified schema matching framework based on LLM for SMD, SSD, and SLD scenarios. (a) Feature similarity computation stage processes input
+schemas and generates comprehensive similarity scores. (b) Schema matching stage leverages LLM for semantic analysis and final matching decisions.
+
+based methods, and compare them with the methods proposed
+in this paper.
+Schema-level methods: Cupid [4] integrates semantic and
+structural information of schemas as its core concept. Similarity Flooding [9] converts schemas into graphs and identifies
+matching pairs through iterative similarity propagation. Clio
+[15] leverages schema information and constraints to map data
+across sources. LSD [16] employs methods like Naive Bayes
+to train a learner for identifying elemental mappings between
+source and mediator schemas. SMAT [12] is a deep learningbased solution using attention mechanisms. LSM [17] finetunes a pre-trained BERT model [18]. Jellyfish [19] is a large
+language model designed for data preprocessing, supporting
+schema-level matching tasks.
+Instance-level methods: Edhy et al. [6] compute attribute
+similarity using instance data for heterogeneous databases.
+QuickMig [20] extends COMA++ [21] by introducing three
+instance-based matching algorithms that generate correspondences between source and target schemas along with associ-
+
+ated mapping classes. Zhang et al. [22] identify relationships
+between columns by analyzing common attributes and value
+features. Valentine [8] combines a value-overlap-based method
+with other open-source matching techniques. Ramnandan et
+al. [7] employ ontology-aligned data to predict candidate
+semantic labels. Sahay et al. [10] use feature engineering and
+clustering to perform schema matching. Madhavan et al. [23]
+train multiple learners with domain-specific corpora to assist
+in schema matching. Both EmbDI [5] and REMA [13] use
+local embedding algorithms to compute cosine distances for
+attribute matching.
+As discussed above, schema matching research primarily focuses on schema-based or instance-based methods, which are
+inadequate for solving multi-scenario schema matching tasks
+with a unified approach. Some solutions leverage pre-trained
+models and LLMs to address schema matching problems, but
+most remain exploratory in nature. In contrast, our approach
+employs Jellyfish, a fine-tuned Llama 2 model, integrating
+semantic computing and prompt engineering techniques to
+
+provide unified schema matching solutions across three scenarios in a single framework.
+IV. F EATURE S IMILARITY C OMPUTATION
+Feature similarity computation forms the foundation of our
+schema matching framework, enabling efficient preprocessing
+for subsequent LLM-based matching. Given the source schema
+Ss and the target schema St , with attributes As and At , we
+compute comprehensive similarity scores using a scenarioadaptive approach.
+For each attribute asi ∈ As and atj ∈ At , we extract three
+feature types: text features (e.g., attribute names and descriptions), structural features (e.g., data types and statistics), and
+semantic features derived from instance values when available.
+The computation strategy is scenario-dependent (SMD, SSD,
+or SLD) and varies with attribute data types.
+In metadata-based similarity computation, we use a
+weighted combination of multiple similarity measures:
+Simname (asi , atj ) = α1 · SimLEV (asi .name, atj .name)
++ α2 · Simseq (asi .name, atj .name)
++ α3 · SimJAC (Tsi , Ttj ),
+(1)
+where SimLEV represents the Levenshtein similarity, Simseq denotes sequence similarity calculated using
+difflib, SimJAC is the Jaccard similarity between token sets Tsi and Ttj derived from the attribute names, and
+α1 + α2 + α3 = 1.
+For numerical attributes in scenarios with instance data, we
+compute similarity based on statistical distributions:
+Simnumeric (asi , atj ) = β1 · Simmean (Vsi , Vtj )
++ β2 · Simstd (Vsi , Vtj )
+
+(2)
+
+Where Vsi and Vtj represent the value sets, and similarities are calculated using normalized differences of statistical
+measures, satisfying β1 + β2 + β3 = 1.
+For categorical or string attributes, a hybrid similarity measure is utilized:
+
++ γ2 · Simdist (Vsi , Vtj ),
+
+Here, W denotes the scenario-specific weight vector. The
+ComputeInstanceSim function adapts its computation strategy based on the scenario type, employing sample-based
+similarity for SSD and distribution-based similarity for SLD.
+The Combine function aggregates different similarity scores
+based on scenario-specific weights. For numerical attributes,
+it employs statistical distribution comparison, while for categorical attributes, it utilizes the hybrid similarity measure
+described in the equations above.
+The algorithm illustrates how our framework tailors its similarity computation strategy to diverse scenarios while ensuring
+computational efficiency. The evaluation section describes the
+precise weight combinations and threshold values used in our
+implementation.
+V. S CHEMA M ATCHING BASED ON LLM
+
++ β3 · Simquantile (Vsi , Vtj ),
+
+Simcat (asi , atj ) = γ1 · SimJAC (Vsi , Vtj )
+
+Algorithm 1 Feature Similarity Computation
+Require: Ss , St , scenario, W
+Ensure: Similarity matrix Sim
+1: Sim ← InitializeM atrix(|As |, |At |)
+2: for ai ∈ As , aj ∈ At do
+3:
+N S ← ComputeN ameSim(ai , aj )
+4:
+if scenario = SMD then
+5:
+Sim[i, j] ← N S
+6:
+else
+7:
+SS ← ComputeStructSim(ai , aj )
+8:
+IS ← ComputeInstanceSim(ai , aj , scenario)
+9:
+Sim[i, j] ← Combine(N S, SS, IS, W)
+10:
+end if
+11: end for
+12: return Sim
+
+After computing feature similarities, our framework utilizes large language models to make final matching decisions
+through structured prompts and adaptive processing mechanisms. Fig. 3 illustrates our unified prompt template design,
+which ensures consistency across scenarios while addressing
+scenario-specific requirements.
+A. Prompt Template Design
+
+(3)
+
+Where Simdist denotes distribution similarity based on
+value frequencies, satisfying γ1 + γ2 = 1.
+The scenario-specific computation process is formalized
+in Algorithm 1, which accepts source and target schemas
+along with scenario configurations as input and produces a
+similarity matrix as output. For each attribute pair, name-based
+similarity (NS) is computed first. Subsequently, depending on
+the scenario type, structural similarity (SS) and instance-based
+similarity (IS) are incorporated with scenario-specific weights.
+Detailed similarity computation methods are described in
+preceding sections.
+
+The prompt template incorporates four essential components to guide the LLM’s matching decisions. The System
+Message and Task Description components define the model’s
+role and matching objectives, offering consistent foundational
+context across all scenarios. The Instance Content component
+adapts to each scenario: SMD emphasizes metadata (attribute
+names, types, and descriptions), SSD supplements metadata
+with sample values, and SLD integrates comprehensive statistical information, including distribution patterns and value
+summaries. The Question section delivers scenario-specific
+analysis guidance, highlighting different aspects ranging from
+metadata interpretation in SMD to statistical pattern analysis
+in SLD.
+
+Prompt
+[System Message]
+You are an AI assistant specialized in data integration and schema matching. Your expertise lies in analyzing attribute similarities across
+different database tables.
+[Task Description]
+Your task is to determine if two attributes (columns) are semantically equivalent based on their metadata only. Each attribute has a name,
+type and description. You must assess if they capture the same exact information.
+SLD
+
+[Instance Content]
+SSD
+
+SMD
+
+Attribute:
+Name:
+Type:
+Description:
+Statistical Information:
+Similarity Score:
+
+Attribute:
+Name:
+Description:
+Type:
+Sample Values:
+
+AttributA :
+Name:
+Type:
+Description:
+
+[Question]
+Are Attribute A and Attribute B semantically equivalent? Consider:
+Column name similarity and meaning
+Data type compatibility
+Description context and purpose
+
+Column name meaning and semantic context
+Exact Concept Match
+Data type and format compatibility
+Strict Metadata Match
+Statistical distribution patterns
+Complete Compatibility (including sample
+Overall similarity metrics
+values)
+[Conclusion Directive]
+Choose your final answer from: [Yes, No].
+
+Fig. 3. Unified prompt template structure for different scenarios. The template consists of shared components (System Message, Task Description) and
+scenario-specific Instance Content and Question considerations.
+
+B. Matching Decision Mechanism
+Our framework employs a two-stage matching process that
+integrates similarity analysis with LLM-based semantic understanding. The initial stage filters candidate pairs based on
+computed similarity scores and scenario-specific thresholds.
+These filtered candidates then undergo LLM analysis via
+constructed prompts that incorporate relevant features and contextual information. The process ensures robust validation by
+verifying both semantic equivalence and structural constraints,
+including one-to-one matching relationships.
+C. Scenario Adaptation
+The framework adapts to varying scenarios through mechanisms of information integration and decision confidence.
+Information integration determines how various types of evidence are weighted during the matching process, ranging from
+metadata-focused analysis in SMD to comprehensive statistical evidence in SLD. The decision confidence mechanism
+adjusts thresholds and validation criteria according to available
+information, ensuring robust matching decisions across all
+scenarios while preserving a consistent output format for
+systematic evaluation.
+
+VI. E VALUATION
+A. Experimental Setup
+Datasets. We evaluated our framework using two datasets:
+the WikiData datasets from Valentine [8] and the MIMICIII [24] dataset for OMOP mapping. WikiData, a prominent knowledge base supporting Wikimedia projects, features four variants: Unionable, View-Unionable, Joinable, and
+Semantically-Joinable, each representing distinct association
+scenarios. The MIMIC-III dataset provides a real-world healthcare schema matching case, mapping a clinical database to the
+standardized OMOP data model. Due to insufficient metadata
+in the WikiData dataset, we employed GPT-4o to generate the
+necessary metadata, followed by rigorous manual validation
+to ensure accuracy and consistency.
+TABLE I
+DATASET S TATISTICS FOR B ENCHMARK E VALUATION
+Dataset
+WikiData
+MIMIC to OMOP
+
+# Tables
+8
+38
+
+Avg # Rows
+9490
+0
+
+# Columns
+120
+725
+
+# Matched
+40
+250
+
+Framework Configuration. Table II outlines our framework’s configuration across various scenarios. We employed
+paraphrase-MiniLM-L3-v2 [25] for embedding computation to
+optimize efficiency. Feature weights are dynamically adjusted
+based on data availability in each scenario, emphasizing name
+similarity for SMD and semantic features for SLD. Similarity
+thresholds are calibrated through empirical validation. For
+instance sampling, 3 samples are used for SSD to capture essential patterns, and 100 samples for SLD to ensure statistical
+representation. Caching is enabled for SSD and SLD scenarios
+to enhance computational efficiency when processing larger
+datasets.
+TABLE II
+S CENARIO - SPECIFIC C ONFIGURATION PARAMETERS
+
+Parameter
+
+SMD SSD
+Feature Weights
+Name
+0.6
+0.5
+Structural
+0.4
+0.3
+Semantic
+0.0
+0.2
+Similarity Thresholds
+Name
+0.5
+0.5
+Structural
+0.6
+0.6
+Semantic
+0.0
+0.45
+Combined
+0.5
+0.5
+Other Settings
+Sample Size
+3
+Cache Enabled False True
+
+SLD
+0.4
+0.2
+0.4
+0.4
+0.6
+0.4
+0.4
+100
+True
+
+Model Configuration. We utilized LLaMA3.1-8B [26] as
+our primary model, deploying it with Ollama [27] for inference. The model was configured with the following parameters: temperature = 0.35, top p = 0.9, top k = 10 for optimal
+generation quality, max tokens = 2048, and repeat penalty =
+1.1 to ensure response coherence.
+Computational Efficiency Analysis Our feature similarity
+computation substantially reduces the number of LLM inference calls required for schema matching, enhancing scalability
+to schemas with thousands of attributes. Specifically, by filtering candidate pairs based on similarity thresholds, the number
+of LLM calls is reduced from O(n2 ) to O(k), where k denotes
+the number of promising candidate pairs.
+Evaluation Metrics. We used standard information retrieval
+metrics, including Precision, Recall, and F1 Score, to assess
+matching performance.
+Baseline Methods. Our framework was compared with
+state-of-the-art methods across various scenarios. GPT-4Omini [28], an optimized version of OpenAI’s GPT-4 models,
+was used. Notably, it was excluded from SLD evaluation due
+to input token limitations.
+SMD: CUPID, Similarity Flooding, COMA-S, and GPT4O-mini
+• SSD: COMA-E, Distribution-based matching, JaccardLevenshtein similarity, and GPT-4O-mini
+
+•
+
+•
+
+SLD: COMA-E, Distribution-based matching, JaccardLevenshtein similarity, and EmbDI
+
+B. Experimental Evaluation
+Table III provides a comprehensive evaluation of our framework across various scenarios and datasets, showcasing consistent performance advantages and adaptability to diverse data
+availability conditions.
+In the SMD scenario with WikiData, our framework
+achieves significant improvements, with a precision of 89.36
+and a recall of 73.12, surpassing traditional methods such
+as CUPID (precision: 59.13, recall: 42.92) and Similarity
+Flooding (precision: 62.17, recall: 63.96). The framework
+also demonstrates superior performance compared to GPT-4Omini (precision: 85.67, recall: 65.45), particularly in scenarios
+with limited metadata. For the MIMIC to OMOP dataset,
+our approach delivers robust performance (precision: 46.53,
+recall: 43.63), despite the heightened complexity of healthcare
+schema matching.
+In the SSD scenario, our framework exhibits balanced
+performance, achieving a precision of 81.77 and a recall of
+84.58. While COMA-E achieves perfect precision of 100.00,
+its lower recall of 72.91 results in a reduced overall F1 score.
+Our framework maintains competitive performance with an
+F1 score of 82.82, effectively integrating limited instance
+data with metadata analysis. The performance closely matches
+GPT-4O-mini (F1 score: 82.15), demonstrating the robustness
+of our approach.
+In the SLD scenario, our framework delivers its strongest
+performance, achieving the highest precision of 95.82 among
+all methods and an F1 score of 92.52. Notably, while EmbDI achieves comparable performance (F1 score: 92.06), our
+framework excels in managing large-scale instance data. GPT4O-mini could not be evaluated in this scenario due to input
+size limitations.
+Across all scenarios, our unified framework demonstrates
+consistent performance advantages while ensuring computational efficiency. It particularly excels in the SLD scenario,
+where abundant instance data enables more effective relationship identification. Among all compared methods, only COMA
+and our framework support all three scenarios, with our
+approach demonstrating superior overall performance, except
+for marginally lower precision in the SSD scenario against
+COMA-E. The framework’s consistent performance across
+WikiData and MIMIC-III datasets highlights its versatility and
+robustness in addressing diverse schema matching tasks.
+C. Ablation Study
+To comprehensively evaluate our framework’s effectiveness,
+we conducted three sets of ablation studies: feature combination analysis, model comparison, and scenario performance
+analysis.
+Feature Analysis. We first assessed the contribution of
+different feature combinations to matching performance, as
+illustrated in Fig. 4. The experimental results indicate that
+textual features alone result in limited performance (F1: 65.8,
+
+TABLE III
+E XPERIMENT R ESULTS ON W IKI DATA AND MIMIC-III DATASETS
+
+Dataset
+
+Scenario
+
+Method
+
+Recall
+
+Precision
+
+F1 Score
+
+SMD
+
+COMA-S
+CUPID
+Similarity Flooding
+GPT-4O-mini
+Schema Matching LLM
+
+63.96
+42.92
+63.96
+65.45
+73.12
+
+89.99
+59.13
+62.17
+85.67
+89.36
+
+68.56
+62.86
+69.76
+74.12
+79.87
+
+SSD
+
+COMA-E
+Distribution-based
+Jaccard-Levenshtein
+GPT-4O-mini
+Schema Matching LLM
+
+72.91
+51.88
+68.96
+85.37
+84.58
+
+100.00
+73.33
+82.92
+78.90
+81.77
+
+83.54
+58.64
+71.18
+82.15
+82.82
+
+SLD
+
+COMA-E
+Distribution-based
+Jaccard-Levenshtein
+EmbDI
+GPT-4O-mini
+Schema Matching LLM
+
+84.79
+61.88
+85.83
+92.76
+N/A
+89.45
+
+91.67
+66.72
+68.48
+91.37
+N/A
+95.82
+
+77.49
+67.01
+76.91
+92.06
+N/A
+92.52
+
+SMD
+
+COMA-S
+CUPID
+Similarity Flooding
+GPT-4O-mini
+Schema Matching LLM
+
+27.25
+6.16
+3.20
+45.83
+43.63
+
+23.24
+56.76
+100.00
+47.67
+46.53
+
+22.32
+10.89
+6.16
+46.73
+45.03
+
+WikiData
+
+MIMIC to OMOP
+
+Feature Ablation Study
+100
+95
+
+Model Comparison
+100
+
+F1 Score
+Recall
+Precision
+
+89.5
+89.4
+
+90
+85.5
+
+85
+
+Performance (%)
+
+Performance (%)
+
+95
+
+92.5
+
+90
+
+82.4
+79.5
+
+80
+76.6
+
+75
+
+73.6
+70.8
+
+70
+
+88.2
+
+85
+
+80
+
+79.9
+
+79.3
+
+78.5
+
+76.5
+
+75
+
+68.5
+
+75.2
+73.1
+
+72.8
+
+72.5
+
+71.5
+
+65.8
+
+65
+
+F1 Score
+Recall
+Precision
+
+95.8
+
+70
+
+63.2
+
+68.9
+
+65
+
+60
+
+O
+Text
+
+nly
+
+ly
+
+l On
+
+a
+ctur
+
+Stru
+
++
+Text
+
+al
+
+ctur
+
+Stru
+
+res
+
+eatu
+All F
+
+Fig. 4. Feature ablation study results comparing different feature combinations.
+
+Precision: 68.5), while structural features in isolation deliver
+slightly better effectiveness (F1: 73.6, Precision: 76.6). The
+combination of textual and structural features results in substantial improvement (F1: 82.4, Precision: 85.5), indicating
+strong complementarity between these feature types. The integration of all features, including semantic analysis, delivers the
+highest performance (F1: 92.5, Precision: 95.8), emphasizing
+the importance of comprehensive feature utilization.
+Model Comparison. We assessed different LLM variants to
+evaluate the impact of model selection, as illustrated in Fig.
+5. LLaMA3.1-8b demonstrates the best overall performance
+(F1: 79.9, Precision: 89.4), closely followed by Gemma2-9b
+(F1: 78.5, Precision: 88.2). Mistral-7b-instruct and Qwen2-7b
+exhibit relatively lower performance, with F1 scores of 75.2
+
+-8b
+
+A3.1
+LLaM
+
+-9b
+
+ma2
+
+Gem
+
+-instr
+
+al-7b
+
+Mistr
+
+uct
+
+b
+n2-7
+
+Qwe
+
+Fig. 5. Performance comparison of different LLM variants.
+
+and 72.5, respectively. This comparison indicates that model
+architecture and pre-training approaches significantly influence
+matching accuracy, with LLaMA3.1-8b’s architecture being
+particularly well-suited for schema matching tasks.
+Scenario Analysis. Performance across various scenarios
+reveals notable patterns, as illustrated in Fig. 6. The framework demonstrates improved effectiveness as more data becomes available, with the rich-instances scenario achieving
+the highest performance (F1: 92.5, Precision: 95.8). The fewinstances scenario exhibits balanced performance (F1: 82.8,
+Recall: 84.6), while the metadata-only scenario maintains
+strong accuracy (F1: 79.9, Precision: 89.4). This progression
+underscores the framework’s capacity to effectively leverage
+additional information when available while maintaining robust performance even with limited data.
+
+Scenario Performance Comparison
+100
+
+Metadata
+Few-instances
+Rich-instances
+
+95.8
+
+95
+92.5
+
+89.5
+
+Performance (%)
+
+90
+
+89.4
+
+84.6
+
+85
+82.8
+
+and improve performance; (3) exploring methods to better
+handle very long sequences and reduce memory complexity
+in large-scale schema matching; and (4) developing advanced
+optimization techniques, such as caching LLM responses for
+similar attributes, parallelizing similarity computations, and
+employing progressive matching strategies that iteratively refine results based on confidence thresholds.
+
+81.8
+
+80
+
+79.9
+
+R EFERENCES
+
+75
+
+73.1
+
+70
+F1 Score
+
+Recall
+
+Precision
+
+Fig. 6. Performance comparison across different scenarios.
+
+These ablation studies underscore the effectiveness of our
+framework’s design choices. The complementary nature of
+diverse features, the superior performance of LLaMA3.1-8b,
+and the framework’s adaptability across scenarios validate our
+architectural decisions and implementation strategies.
+VII. C ONCLUSIONS AND F UTURE W ORK
+In this paper, we present a unified LLM-based schema
+matching framework that efficiently addresses schema matching tasks across three scenarios: Scenario with only MetaData
+(SMD), Scenario with a Small amount of instance Data (SSD),
+and Scenario with a Large amount of instance Data (SLD). Our
+framework uniquely integrates traditional semantic similarity
+computation and LLM prompt engineering to achieve efficient
+and accurate schema matching across diverse scenarios.
+The framework’s effectiveness is validated through comprehensive experiments on WikiData and MIMIC-III datasets.
+Results highlight superior performance across all scenarios,
+particularly in the rich-instances scenario, achieving an F1
+score of 92.5 and precision of 95.8. Our ablation studies
+reveal that integrating diverse feature types substantially improves matching accuracy, with the combination of textual,
+structural, and semantic features outperforming single-feature
+approaches. The use of LLaMA3.1-8b delivers optimal performance among tested models, consistently achieving strong
+results across scenarios.
+Key innovations of our framework include: (1) scenarioadaptive similarity computation that optimizes feature utilization based on data availability; (2) carefully designed prompt
+templates tailored for different matching scenarios; and (3) a
+unified matching strategy that effectively balances precision
+and recall across varying data conditions. The framework’s
+ability to maintain strong performance even with limited data
+while scaling effectively to handle rich instances demonstrates
+its practical utility for real-world applications.
+Several promising directions for future work are identified: (1) extending the framework to support more complex
+matching relationships, such as one-to-many and many-tomany mappings; (2) incorporating retrieval-augmented generation techniques to enhance the schema matching model
+
+[1] S. S. Aman, D. D. A. Agbo, B. G. N’guessan, and T. Kone, “Design
+of a data storage and retrieval ontology for the efficient integration of
+information in artificial intelligence systems,” International Journal of
+Information Technology, vol. 16, no. 3, pp. 1743–1761, 2024.
+[2] A. A. Alwan, A. Nordin, M. Alzeber, and A. Z. Abualkishik, “A survey
+of schema matching research using database schemas and instances,”
+International Journal of Advanced Computer Science and Applications,
+vol. 8, no. 10, 2017.
+[3] I. F. Cruz, F. P. Antonelli, and C. Stroe, “Agreementmaker: efficient
+matching for large real-world schemas and ontologies,” Proceedings of
+the VLDB Endowment, vol. 2, no. 2, pp. 1586–1589, 2009.
+[4] J. Madhavan, P. A. Bernstein, and E. Rahm, “Generic schema matching
+with cupid,” in vldb, vol. 1, no. 2001, 2001, pp. 49–58.
+[5] R. Cappuzzo, P. Papotti, and S. Thirumuruganathan, “Creating embeddings of heterogeneous relational datasets for data integration tasks,” in
+Proceedings of the 2020 ACM SIGMOD International Conference on
+Management of Data, 2020, pp. 1335–1349.
+[6] E. Sutanta, R. Wardoyo, K. Mustofa, and E. Winarko, “A hybrid
+model schema matching using constraint-based and instance-based.”
+International Journal of Electrical & Computer Engineering (20888708), vol. 6, no. 3, 2016.
+[7] S. K. Ramnandan, A. Mittal, C. A. Knoblock, and P. Szekely, “Assigning
+semantic labels to data sources,” in European semantic web conference.
+Springer, 2015, pp. 403–417.
+[8] C. Koutras, G. Siachamis, A. Ionescu, K. Psarakis, J. Brons, M. Fragkoulis, C. Lofi, A. Bonifati, and A. Katsifodimos, “Valentine: Evaluating
+matching techniques for dataset discovery,” in 2021 IEEE 37th International Conference on Data Engineering (ICDE). IEEE, 2021, pp.
+468–479.
+[9] S. Melnik, H. Garcia-Molina, and E. Rahm, “Similarity flooding: A
+versatile graph matching algorithm and its application to schema matching,” in Proceedings 18th international conference on data engineering.
+IEEE, 2002, pp. 117–128.
+[10] T. Sahay, A. Mehta, and S. Jadon, “Schema matching using machine
+learning,” in 2020 7th International Conference on Signal Processing
+and Integrated Networks (SPIN). IEEE, 2020, pp. 359–366.
+[11] R. Dhamankar, Y. Lee, A. Doan, A. Halevy, and P. Domingos, “imap:
+Discovering complex semantic matches between database schemas,” in
+Proceedings of the 2004 ACM SIGMOD international conference on
+Management of data, 2004, pp. 383–394.
+[12] J. Zhang, B. Shin, J. D. Choi, and J. C. Ho, “Smat: An attentionbased deep learning solution to the automation of schema matching,” in
+Advances in Databases and Information Systems: 25th European Conference, ADBIS 2021, Tartu, Estonia, August 24–26, 2021, Proceedings
+25. Springer, 2021, pp. 260–274.
+[13] C. Koutras, M. Fragkoulis, A. Katsifodimos, and C. Lofi, “Rema:
+Graph embeddings-based relational schema matching.” in EDBT/ICDT
+Workshops, 2020.
+[14] B. Hättasch, M. Truong-Ngoc, A. Schmidt, and C. Binnig, “It’s ai match:
+A two-step approach for schema matching using embeddings,” arXiv
+preprint arXiv:2203.04366, 2022.
+[15] R. Fagin, L. M. Haas, M. Hernández, R. J. Miller, L. Popa, and
+Y. Velegrakis, “Clio: Schema mapping creation and data exchange,”
+Conceptual Modeling: Foundations and Applications: Essays in Honor
+of John Mylopoulos, pp. 198–236, 2009.
+[16] A. Doan, P. M. Domingos, and A. Y. Levy, “Learning source description
+for data integration.” in WebDB (informal proceedings), 2000, pp. 81–86.
+[17] Y. Zhang, A. Floratou, J. Cahoon, S. Krishnan, A. C. Müller, D. Banda,
+F. Psallidas, and J. M. Patel, “Schema matching using pre-trained
+language models,” in 2023 IEEE 39th International Conference on Data
+Engineering (ICDE). IEEE, 2023, pp. 1558–1571.
+
+[18] J. Devlin, M.-W. Chang, K. Lee, and K. Toutanova, “Bert: Pre-training
+of deep bidirectional transformers for language understanding,” arXiv
+preprint arXiv:1810.04805, 2018.
+[19] H. Zhang, Y. Dong, C. Xiao, and M. Oyamada, “Jellyfish: A large language model for data preprocessing,” arXiv preprint arXiv:2312.01678,
+2023.
+[20] C. Drumm, M. Schmitt, H.-H. Do, and E. Rahm, “Quickmig: automatic
+schema matching for data migration projects,” in Proceedings of the
+sixteenth ACM conference on Conference on information and knowledge
+management, 2007, pp. 107–116.
+[21] H.-H. Do and E. Rahm, “Coma—a system for flexible combination of
+schema matching approaches,” in VLDB’02: Proceedings of the 28th
+International Conference on Very Large Databases. Elsevier, 2002,
+pp. 610–621.
+[22] M. Zhang, M. Hadjieleftheriou, B. C. Ooi, C. M. Procopiuc, and
+D. Srivastava, “Automatic discovery of attributes in relational databases,”
+in Proceedings of the 2011 ACM SIGMOD International Conference on
+Management of data, 2011, pp. 109–120.
+[23] J. Madhavan, P. A. Bernstein, A. Doan, and A. Halevy, “Corpusbased schema matching,” in 21st International Conference on Data
+Engineering (ICDE’05). IEEE, 2005, pp. 57–68.
+[24] A. E. Johnson, T. J. Pollard, L. Shen, L.-w. H. Lehman, M. Feng,
+M. Ghassemi, B. Moody, P. Szolovits, L. Anthony Celi, and R. G. Mark,
+“Mimic-iii, a freely accessible critical care database,” Scientific data,
+vol. 3, no. 1, pp. 1–9, 2016.
+[25] N. Reimers and I. Gurevych, “Sentence-bert: Sentence embeddings
+using siamese bert-networks,” arXiv preprint arXiv:1908.10084, 2019.
+[Online]. Available: https://arxiv.org/abs/1908.10084
+[26] H. Touvron, L. Martin, K. Stone, P. Albert, A. Almahairi, Y. Babaei,
+N. Bashlykov, S. Batra, P. Bhargava, S. Bhosale et al., “Llama
+2: Open foundation and fine-tuned chat models,” arXiv preprint
+arXiv:2307.09288, 2023.
+[27] Ollama, “Ollama: Simplifying large language model deployment,”
+2023, accessed: January 2025. [Online]. Available: https://ollama.com
+[28] OpenAI, “Gpt-4 technical report,” 2023, accessed: January 2025.
+[Online]. Available: https://openai.com/research/gpt-4
+
+

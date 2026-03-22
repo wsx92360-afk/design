@@ -1,0 +1,819 @@
+{
+  "dataset": "Fodors-Zagats",
+  "category": "Structured",
+  "data_type": "SLD",
+  "match_count": 110,
+  "threshold": 0.5,
+  "normalize_before_match": false,
+  "model_type": "gradient_boosting",
+  "matches": [
+    {
+      "ltable_id": 45.0,
+      "rtable_id": 263.0,
+      "confidence": 0.9999999618578023,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 66.0,
+      "rtable_id": 284.0,
+      "confidence": 0.9999999618577488,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 49.0,
+      "rtable_id": 267.0,
+      "confidence": 0.9999999618577488,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 25.0,
+      "rtable_id": 243.0,
+      "confidence": 0.9999999618577488,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 62.0,
+      "rtable_id": 280.0,
+      "confidence": 0.999999961857727,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 47.0,
+      "rtable_id": 265.0,
+      "confidence": 0.999999961857727,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 36.0,
+      "rtable_id": 254.0,
+      "confidence": 0.999999961857727,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 42.0,
+      "rtable_id": 260.0,
+      "confidence": 0.999999961857727,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 102.0,
+      "rtable_id": 320.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 92.0,
+      "rtable_id": 310.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 44.0,
+      "rtable_id": 262.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 52.0,
+      "rtable_id": 270.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 35.0,
+      "rtable_id": 253.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 9.0,
+      "rtable_id": 227.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 43.0,
+      "rtable_id": 261.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 19.0,
+      "rtable_id": 237.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 86.0,
+      "rtable_id": 304.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 22.0,
+      "rtable_id": 240.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 53.0,
+      "rtable_id": 271.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 98.0,
+      "rtable_id": 316.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 13.0,
+      "rtable_id": 231.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 2.0,
+      "rtable_id": 220.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 110.0,
+      "rtable_id": 328.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 78.0,
+      "rtable_id": 296.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 15.0,
+      "rtable_id": 233.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 104.0,
+      "rtable_id": 322.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 33.0,
+      "rtable_id": 251.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 89.0,
+      "rtable_id": 307.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 46.0,
+      "rtable_id": 264.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 6.0,
+      "rtable_id": 224.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 67.0,
+      "rtable_id": 285.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 95.0,
+      "rtable_id": 313.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 4.0,
+      "rtable_id": 222.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 30.0,
+      "rtable_id": 248.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 76.0,
+      "rtable_id": 294.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 61.0,
+      "rtable_id": 279.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 18.0,
+      "rtable_id": 236.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 94.0,
+      "rtable_id": 312.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 34.0,
+      "rtable_id": 252.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 68.0,
+      "rtable_id": 286.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 93.0,
+      "rtable_id": 311.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 51.0,
+      "rtable_id": 269.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 103.0,
+      "rtable_id": 321.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 63.0,
+      "rtable_id": 281.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 31.0,
+      "rtable_id": 249.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 5.0,
+      "rtable_id": 223.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 80.0,
+      "rtable_id": 298.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 99.0,
+      "rtable_id": 317.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 109.0,
+      "rtable_id": 327.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 91.0,
+      "rtable_id": 309.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 29.0,
+      "rtable_id": 247.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 1.0,
+      "rtable_id": 219.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 38.0,
+      "rtable_id": 256.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 0.0,
+      "rtable_id": 218.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 32.0,
+      "rtable_id": 250.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 3.0,
+      "rtable_id": 221.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 50.0,
+      "rtable_id": 268.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 17.0,
+      "rtable_id": 235.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 87.0,
+      "rtable_id": 305.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 106.0,
+      "rtable_id": 324.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 59.0,
+      "rtable_id": 277.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 97.0,
+      "rtable_id": 315.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 55.0,
+      "rtable_id": 273.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 108.0,
+      "rtable_id": 326.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 82.0,
+      "rtable_id": 300.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 96.0,
+      "rtable_id": 314.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 28.0,
+      "rtable_id": 246.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 101.0,
+      "rtable_id": 319.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 79.0,
+      "rtable_id": 297.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 100.0,
+      "rtable_id": 318.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 107.0,
+      "rtable_id": 325.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 27.0,
+      "rtable_id": 245.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 75.0,
+      "rtable_id": 293.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 58.0,
+      "rtable_id": 276.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 57.0,
+      "rtable_id": 275.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 73.0,
+      "rtable_id": 291.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 39.0,
+      "rtable_id": 257.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 37.0,
+      "rtable_id": 255.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 74.0,
+      "rtable_id": 292.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 84.0,
+      "rtable_id": 302.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 83.0,
+      "rtable_id": 301.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 41.0,
+      "rtable_id": 259.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 48.0,
+      "rtable_id": 266.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 21.0,
+      "rtable_id": 239.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 56.0,
+      "rtable_id": 274.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 88.0,
+      "rtable_id": 306.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 72.0,
+      "rtable_id": 290.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 14.0,
+      "rtable_id": 232.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 23.0,
+      "rtable_id": 241.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 26.0,
+      "rtable_id": 244.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 16.0,
+      "rtable_id": 234.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 77.0,
+      "rtable_id": 295.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 12.0,
+      "rtable_id": 230.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 40.0,
+      "rtable_id": 258.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 111.0,
+      "rtable_id": 329.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 7.0,
+      "rtable_id": 225.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 24.0,
+      "rtable_id": 242.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 10.0,
+      "rtable_id": 228.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 105.0,
+      "rtable_id": 323.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 81.0,
+      "rtable_id": 299.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 11.0,
+      "rtable_id": 229.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 8.0,
+      "rtable_id": 226.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 54.0,
+      "rtable_id": 272.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 90.0,
+      "rtable_id": 308.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 65.0,
+      "rtable_id": 283.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 85.0,
+      "rtable_id": 303.0,
+      "confidence": 0.9999999618577268,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 64.0,
+      "rtable_id": 282.0,
+      "confidence": 0.9999999534129989,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 71.0,
+      "rtable_id": 289.0,
+      "confidence": 0.9999999534129882,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 69.0,
+      "rtable_id": 287.0,
+      "confidence": 0.9999999534129882,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    },
+    {
+      "ltable_id": 70.0,
+      "rtable_id": 288.0,
+      "confidence": 0.9999999534129882,
+      "match_method": "sld_model_prediction:gradient_boosting",
+      "gold_label": 1
+    }
+  ],
+  "evaluation": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "evaluated_pair_count": 946
+  },
+  "scene": "schema_with_instance_data",
+  "matching_strategy": "sld_instance_aware_matching",
+  "scene_detector": "content_heuristic_fallback",
+  "scene_confidence": 0.76,
+  "scene_evidence": "检测到实例值密度较高或明确的实例数据表，因此判定为 SLD。",
+  "agent_actions": [
+    {
+      "action": "flag_ambiguous_matches",
+      "flagged_count": 0
+    }
+  ],
+  "agent_diagnostics": {
+    "issues": [],
+    "summary": "未检测到明显异常，结果可直接整理输出。",
+    "suggested_actions": [
+      "finalize_report"
+    ],
+    "stats": {
+      "match_count": 110,
+      "threshold": 0.5,
+      "ambiguous_count": 0,
+      "type_conflict_count": 0,
+      "one_to_many_conflict_count": 0,
+      "uncovered_target_count": 0
+    },
+    "uncovered_targets": []
+  },
+  "agent_summary": "未检测到明显异常，结果可直接整理输出。",
+  "agent_strategy_trace": [
+    "flag_ambiguous_matches"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "mimic_2_omop": {
+    "dataset": "mimic_2_omop",
+    "category": "SMD",
+    "data_type": "SMD",
+    "model_type": "gradient_boosting",
+    "pair_count": 321,
+    "source_count": 2,
+    "train_accuracy": 0.9958333333333333,
+    "test_accuracy": 0.8765432098765432,
+    "precision": 0.8148148148148148,
+    "recall": 0.8148148148148148,
+    "f1_score": 0.8148148148148148,
+    "label_distribution": {
+      "positive": 107,
+      "negative": 214
+    },
+    "split_summary": {
+      "train_count": 108,
+      "match_count": 47,
+      "train_file": "datasets\\SMD\\mimic_2_omop\\gold_mapping_train.csv",
+      "match_file": "datasets\\SMD\\mimic_2_omop\\gold_mapping_match.csv"
+    },
+    "smd_pair_metadata": {
+      "positive_pairs": 107,
+      "negative_pairs": 214,
+      "source_name": "mimic_iii",
+      "target_name": "omop"
+    },
+    "feature_names": [
+      "column_name_similarity",
+      "column_name_token_overlap",
+      "table_name_similarity",
+      "column_desc_similarity",
+      "column_desc_token_overlap",
+      "type_exact_match",
+      "pk_match",
+      "fk_match",
+      "context_similarity",
+      "combined_levenshtein_similarity"
+    ],
+    "feature_importance": {
+      "column_name_similarity": 0.24650720485775265,
+      "column_name_token_overlap": 0.03417094772855809,
+      "table_name_similarity": 0.24707441292648552,
+      "column_desc_similarity": 0.08542923683581707,
+      "column_desc_token_overlap": 0.11439644267653193,
+      "type_exact_match": 0.018400855657895055,
+      "pk_match": 0.0033400642966944045,
+      "fk_match": 0.07541027812766231,
+      "context_similarity": 0.0,
+      "combined_levenshtein_similarity": 0.17527055689260287
+    },
+    "confusion_matrix": [
+      [
+        49,
+        5
+      ],
+      [
+        5,
+        22
+      ]
+    ]
+  }
+}
